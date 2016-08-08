@@ -4,8 +4,8 @@
 
 mkdir /tmp/pcaps 2> /dev/null
 
-DAEMON='/usr/bin/python /usr/bin/bt.py'
-DAEMON2='sh /usr/bin/wardrive.sh'
+DAEMON='/usr/bin/bt.py'
+DAEMON2='/usr/bin/wardrive.sh'
 
 case "$1" in
   start)
