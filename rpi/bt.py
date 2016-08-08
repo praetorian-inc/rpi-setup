@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import bluetooth, os, time, sys, threading
 
 # The in directory for new pcap files
@@ -27,7 +29,7 @@ def _format_log(logstring):
         # All the services with this name should be fine
         service_desc = get_connection(ld)
 
-        # Getting service information 
+        # Getting service information
         port = service_desc['port']
         target_address = service_desc['host']
 
@@ -57,7 +59,7 @@ def _format_log(logstring):
         # All the services with this name should be fine
         service_desc = get_connection(ld)
 
-        # Getting service information 
+        # Getting service information
         port = service_desc['port']
         target_address = service_desc['host']
 
