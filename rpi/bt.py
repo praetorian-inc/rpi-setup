@@ -165,19 +165,19 @@ def handle_exception(ld, e, sock):
         sock.close()
 
     ld.write(_format_log(str(e)))
-    print "Out of both threads"
+    print "Out of both threads ({0})".format(str(e))
 
     is_running = True
     ld.write(_format_log("Restarting service"))
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     setup_fifo(FIFOPATH)
     ld = setup_logs(LOGFILE)
     ld.write(_format_log("Starting service"))
+    socket = None
 
     while True:
-        socket = None
         is_running = True
         try:
             socket = connect_bluetooth(ld)
