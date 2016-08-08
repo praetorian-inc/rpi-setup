@@ -29,7 +29,7 @@ def _format_log(logstring):
         # All the services with this name should be fine
         service_desc = get_connection(ld)
 
-        # Getting service information
+        # Getting service information 
         port = service_desc['port']
         target_address = service_desc['host']
 
@@ -59,7 +59,7 @@ def _format_log(logstring):
         # All the services with this name should be fine
         service_desc = get_connection(ld)
 
-        # Getting service information
+        # Getting service information 
         port = service_desc['port']
         target_address = service_desc['host']
 
@@ -90,7 +90,7 @@ def send_data(ld, sock):
                 os.remove(PCAP_DIR + "/" + f)
         except Exception as e:
             is_running = False
-    print "stopped from send"
+    ld.write(_format_log("Send thread stopped"))
 
 
 def receive_data(ld, sock):
@@ -102,6 +102,7 @@ def receive_data(ld, sock):
             print "Out of sleep"
             data = sock.recv(1600)
             print "past here"
+            print data[:5]
             with open (FIFOPATH, 'a') as fd:
                 print "Opened the FIFO"
                 fd.write(data + "\n")
@@ -109,7 +110,7 @@ def receive_data(ld, sock):
             print "Data: " + data
         except Exception as e:
             is_running = False
-    print "stopped from receive"
+    ld.write(_format_log("Receive thread stopped"))
 
 
 def connect_bluetooth(ld):
@@ -167,19 +168,19 @@ def handle_exception(ld, e, sock):
         sock.close()
 
     ld.write(_format_log(str(e)))
-    print "Out of both threads ({0})".format(str(e))
+    ld.write(_format_log("Out of send and receive threads"))
 
     is_running = True
     ld.write(_format_log("Restarting service"))
 
 
-if __name__ == "__main__":
+if __name__=="__main__":
     setup_fifo(FIFOPATH)
     ld = setup_logs(LOGFILE)
     ld.write(_format_log("Starting service"))
-    socket = None
 
     while True:
+        socket = None
         is_running = True
         try:
             socket = connect_bluetooth(ld)
