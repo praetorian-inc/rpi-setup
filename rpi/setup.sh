@@ -7,7 +7,7 @@ apt-get update && apt-get -y upgrade
 apt-get -y install tcpdump python-pip python-dev bluetooth libbluetooth-dev git mercurial python-usb python-crypto python-serial libgcrypt-dev
 
 pip install pybluez
-pip install ht+https://bitbucket.org/secdev/scapy-com
+pip install hg+https://bitbucket.org/secdev/scapy-com
 pip install git+https://github.com/jdongian/killerbee.git
 
 cp bt.py wardrive.sh /usr/bin
