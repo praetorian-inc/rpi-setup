@@ -1,0 +1,26 @@
+#! /bin/sh
+# /etc/init.d/iot-setup
+#
+
+mkdir /tmp/pcaps 2> /dev/null
+
+DAEMON='/usr/bin/python /usr/bin/bt.py'
+DAEMON2='sh /usr/bin/wardrive.sh'
+
+case "$1" in
+  start)
+    echo "Starting IoT setup process"
+    # ensure fifo is set up
+    rm /tmp/gpsfifo 2> /dev/null
+    mkfifo /tmp/gpsfifo
+    # Start python script to connect to android device
+    start-stop-daemon --exec $DAEMON --start --pidfile --pid 2 --background
+    sleep 5
+    # start zbwardrive
+    start-stop-daemon --exec $DAEMON2 --start --pidfile --pid 3 --background
+    ;;
+  *)
+
+esac
+
+exit 0
