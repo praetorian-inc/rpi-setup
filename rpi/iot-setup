@@ -5,7 +5,9 @@
 mkdir /tmp/pcaps 2> /dev/null
 
 DAEMON='/usr/bin/bt.py'
+PID='/var/run/bt.pid'
 DAEMON2='/usr/bin/zbwardrive.sh'
+PID2='/var/run/zbwardrive.pid'
 
 case "$1" in
   start)
@@ -14,10 +16,10 @@ case "$1" in
     rm /tmp/gpsfifo 2> /dev/null
     mkfifo /tmp/gpsfifo
     # Start python script to connect to android device
-    start-stop-daemon --exec $DAEMON --start --pidfile --pid 2 --background
+    start-stop-daemon --exec $DAEMON --start --pidfile $PID --background
     sleep 5
     # start zbwardrive
-    start-stop-daemon --exec $DAEMON2 --start --pidfile --pid 3 --background
+    start-stop-daemon --exec $DAEMON2 --start --pidfile $PID2 --background
     ;;
   *)
 

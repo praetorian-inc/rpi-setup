@@ -1,3 +1,5 @@
+#!/bin/sh
+
 PCAP_DIR=/tmp/pcaps
 STDOUT_LOG=/tmp/zbout
 STDERR_LOG=/tmp/zberr
