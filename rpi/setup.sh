@@ -10,8 +10,8 @@ pip install pybluez
 pip install ht+https://bitbucket.org/secdev/scapy-com
 pip install git+https://github.com/jdongian/killerbee.git
 
-cp killerbee/rpi/bt.py killerbee/rpi/wardrive.sh /usr/bin
+cp bt.py wardrive.sh /usr/bin
 chmod +x /usr/bin/bt.py /usr/bin/zbwardrive.sh
 
-cp killerbee/rpi/iot-setup /etc/init.d
+cp iot-setup /etc/init.d
 update-rc.d iot-setup defaults
