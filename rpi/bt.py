@@ -75,28 +75,38 @@ def _format_log(logstring):
 def send_data(ld, sock):
     global is_running
     while is_running:
-        # Loop through the in directory and over files
-        time.sleep(2)
-        files = os.listdir(PCAP_DIR)
-        for f in files:
-            fd = open(PCAP_DIR + '/' + f, 'rb')
-            temp = fd.read()
-            sock.send(temp)
-            ld.write(_format_log("Sending " + f))
-            fd.close()
-            os.remove(PCAP_DIR + "/" + f)
+        try:
+            # Loop through the in directory and over files
+            time.sleep(2)
+            files = os.listdir(PCAP_DIR)
+            for f in files:
+                fd = open(PCAP_DIR + '/' + f, 'rb')
+                temp = fd.read()
+                sock.send(temp)
+                ld.write(_format_log("Sending " + f))
+                fd.close()
+                os.remove(PCAP_DIR + "/" + f)
+        except Exception as e:
+            is_running = False
     print "stopped from send"
 
 
 def receive_data(ld, sock):
     global is_running
     while is_running:
-        time.sleep(7)
-        print "Getting data"
-        data = sock.recv(1600)
-        with open (FIFOPATH, 'a') as fd:
-            fd.write(data + "\n")
-        print "Data: " + data
+        try:
+            print "Getting data"
+            time.sleep(7)
+            print "Out of sleep"
+            data = sock.recv(1600)
+            print "past here"
+            with open (FIFOPATH, 'a') as fd:
+                print "Opened the FIFO"
+                fd.write(data + "\n")
+            print "Wrote to the FIFO"
+            print "Data: " + data
+        except Exception as e:
+            is_running = False
     print "stopped from receive"
 
 
@@ -168,6 +178,7 @@ if __name__ == "__main__":
     socket = None
 
     while True:
+        is_running = True
         try:
             socket = connect_bluetooth(ld)
 
