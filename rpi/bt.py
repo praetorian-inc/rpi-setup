@@ -4,7 +4,7 @@ import bluetooth, os, time, sys, threading
 
 # The in directory for new pcap files
 PCAP_DIR = "/tmp/pcaps"
-FIFOPATH = '/tmp/gpsfifo'
+GPSPATH = '/tmp/gpsfifo'
 SERVICE_NAME = "EyeOfTechnology"
 LOGFILE = "/var/log/iot.log"
 is_running = True
@@ -97,17 +97,10 @@ def receive_data(ld, sock):
     global is_running
     while is_running:
         try:
-            print "Getting data"
             time.sleep(7)
-            print "Out of sleep"
             data = sock.recv(1600)
-            print "past here"
-            print data[:5]
-            with open (FIFOPATH, 'a') as fd:
-                print "Opened the FIFO"
-                fd.write(data + "\n")
-            print "Wrote to the FIFO"
-            print "Data: " + data
+            with open (GPSPATH, 'w') as fd:
+                fd.write(data + ";\n")
         except Exception as e:
             is_running = False
     ld.write(_format_log("Receive thread stopped"))
@@ -142,11 +135,6 @@ def get_bluetooth_socket(ld):
     return sock
 
 
-def setup_fifo(path):
-    if not os.path.exists(path):
-        os.mkfifo(path)
-
-
 def setup_logs(path):
     if os.path.isfile(path):
         return open(path, 'a', 0)
@@ -175,7 +163,6 @@ def handle_exception(ld, e, sock):
 
 
 if __name__=="__main__":
-    setup_fifo(FIFOPATH)
     ld = setup_logs(LOGFILE)
     ld.write(_format_log("Starting service"))
 
