@@ -11,9 +11,16 @@ Scripts for setting up the Raspberry Pi for running zbwardrive
 
 ## Usage
 
-Clone the repository and run `setup.sh` as root. This will set up required
-dependencies for zbwardrive and bluetooth. Additionally, it will add a service
-that starts on boot. After installation, the Raspberry Pi will run a bluetooth
-daemon that tries to connect to an appropriate Android device. The bluetooth
-daemon will talk to the Android application and the zbwardrive process, which
-is also started on boot.
+Install raspbian to your sdcard. The lite version works fine, and setup
+has been tested with jessie-lite. Set up wifi using
+[the official documentation](https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md)
+or [by following the community instructions](http://raspberrypi.stackexchange.com/a/37921/51668).
+
+Clone the repository into the pi and run `setup.sh` as root. This will set up
+required dependencies for zbwardrive and bluetooth. Additionally, it will add a
+service that starts on boot. After installation, the Raspberry Pi will run a
+bluetooth daemon that tries to connect to an appropriate Android device. The
+bluetooth daemon will talk to the Android application and the zbwardrive
+process, which is also started on boot.
+
+It is good practice to also change the required credentials for ssh login.
