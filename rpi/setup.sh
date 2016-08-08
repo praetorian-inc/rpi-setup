@@ -10,7 +10,7 @@ pip install pybluez
 pip install hg+https://bitbucket.org/secdev/scapy-com
 pip install git+https://github.com/jdongian/killerbee.git
 
-cp bt.py wardrive.sh /usr/bin
+cp bt.py zbwardrive.sh /usr/bin
 chmod +x /usr/bin/bt.py /usr/bin/zbwardrive.sh
 
 cp iot-setup /etc/init.d
