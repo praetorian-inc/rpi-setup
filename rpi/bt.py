@@ -98,7 +98,7 @@ def receive_data(ld, sock):
     while is_running:
         try:
             time.sleep(7)
-            data = sock.recv(1600)
+            data = sock.recv(200)
             with open (GPSPATH, 'w') as fd:
                 fd.write(data + ";\n")
         except Exception as e:
@@ -131,6 +131,7 @@ def get_bluetooth_services(ld, name):
 
 def get_bluetooth_socket(ld):
     sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
+    sock.settimeout(10)
     ld.write(_format_log("Got bluetooth socket"))
     return sock
 
