@@ -76,6 +76,7 @@ def _format_log(logstring):
 
 def send_data(ld, sock):
     global is_running
+    sock.settimeout(20.0)
     while is_running:
         try:
             # Loop through the in directory and over files
@@ -131,7 +132,6 @@ def get_bluetooth_services(ld, name):
 
 def get_bluetooth_socket(ld):
     sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
-    sock.settimeout(10)
     ld.write(_format_log("Got bluetooth socket"))
     return sock
 
