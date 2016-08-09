@@ -10,7 +10,7 @@ case "$1" in
   start)
     echo "Starting IoT setup process"
     mkdir /tmp/pcaps 2> /dev/null
-    touch /dev/gpsfifo # deliberately not a fifo
+    touch /tmp/gpsfifo # deliberately not a fifo
     # Start python script to connect to android device
     start-stop-daemon --exec $DAEMON --start --pidfile $PID --background
     # start zbwardrive
