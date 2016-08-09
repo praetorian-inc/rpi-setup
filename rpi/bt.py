@@ -76,20 +76,25 @@ def _format_log(logstring):
 
 def send_data(ld, sock):
     global is_running
-    sock.settimeout(20.0)
     while is_running:
         try:
             # Loop through the in directory and over files
             time.sleep(2)
             files = os.listdir(PCAP_DIR)
             for f in files:
-                fd = open(PCAP_DIR + '/' + f, 'rb')
-                temp = fd.read()
-                sock.send(temp)
-                ld.write(_format_log("Sending " + f))
-                fd.close()
-                os.remove(PCAP_DIR + "/" + f)
+                fn, fe = os.path.splitext(f)
+                if fe == ".pcap":
+                    fd = open(PCAP_DIR + '/' + f, 'rb')
+                    temp = fd.read()
+                    sock.send(str(len(temp)).zfill(8))
+                    sock.sendall(temp)
+                    ld.write(_format_log("Sending " + f))
+                    fd.close()
+                    #os.remove(PCAP_DIR + "/" + f)
+            while True:
+                time.sleep(1000)
         except Exception as e:
+            print str(e)
             is_running = False
     ld.write(_format_log("Send thread stopped"))
 
@@ -144,6 +149,7 @@ def setup_logs(path):
 
 
 def start_threads(ld, sock):
+    sock.setblocking(True)
     s = threading.Thread(target=send_data, args=(ld, sock))
     r = threading.Thread(target=receive_data, args=(ld, sock))
     s.start()
