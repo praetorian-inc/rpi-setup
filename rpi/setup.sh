@@ -10,8 +10,9 @@ pip install pybluez
 pip install hg+https://bitbucket.org/secdev/scapy-com
 pip install git+https://github.com/jdongian/killerbee.git
 
-cp bt.py zbwardrive.sh /usr/bin
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cp $DIR/bt.py $DIR/zbwardrive.sh /usr/bin/
 chmod +x /usr/bin/bt.py /usr/bin/zbwardrive.sh
 
-cp iot-setup /etc/init.d
+cp $DIR/iot-setup /etc/init.d
 update-rc.d iot-setup defaults
