@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # sudo dd bs=1M if=image.img of=/dev/[XXX]
 # raspi-config -> internationalization (5) -> keyboard setup
 # configure wifi (/etc/wpa_supplicant/wpa_supplicant.conf)
