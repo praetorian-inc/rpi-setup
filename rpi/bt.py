@@ -88,13 +88,13 @@ def send_data(ld, sock):
                     temp = fd.read()
                     sock.send(str(len(temp)).zfill(8))
                     sock.sendall(temp)
-                    ld.write(_format_log("Sending " + f))
+                    #ld.write(_format_log("Sending " + f))
                     fd.close()
                     os.remove(PCAP_DIR + "/" + f)
         except Exception as e:
             is_running = False
-            ld.write(_format_log(str(e)))
-    ld.write(_format_log("Send thread stopped"))
+            #ld.write(_format_log(str(e)))
+    #ld.write(_format_log("Send thread stopped"))
 
 
 def receive_data(ld, sock):
@@ -107,8 +107,8 @@ def receive_data(ld, sock):
                 fd.write(data + ";\n")
         except Exception as e:
             is_running = False
-            ld.write(_format_log(str(e)))
-    ld.write(_format_log("Receive thread stopped"))
+            #ld.write(_format_log(str(e)))
+    #ld.write(_format_log("Receive thread stopped"))
 
 
 def connect_bluetooth(ld):
@@ -117,7 +117,7 @@ def connect_bluetooth(ld):
     service = get_bluetooth_services(ld, SERVICE_NAME)[0]
     socket.connect((service['host'], service['port']))
 
-    ld.write(_format_log("Connected to android device"))
+    #ld.write(_format_log("Connected to android device"))
     return socket
 
 
@@ -129,14 +129,14 @@ def get_bluetooth_services(ld, name):
             services = bluetooth.find_service(name=name)
         except bluetooth.btcommon.BluetoothError as e:
             error_msg = str(e)
-            if not error_msg == "error accessing bluetooth device":
-                ld.write(_format_log(str(e)))
+            #if not error_msg == "error accessing bluetooth device":
+                #ld.write(_format_log(str(e)))
     return services
 
 
 def get_bluetooth_socket(ld):
     sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
-    ld.write(_format_log("Got bluetooth socket"))
+    #ld.write(_format_log("Got bluetooth socket"))
     return sock
 
 
@@ -161,16 +161,17 @@ def handle_exception(ld, e, sock):
     if sock is not None:
         sock.close()
 
-    ld.write(_format_log(str(e)))
-    ld.write(_format_log("Out of send and receive threads"))
+    #ld.write(_format_log(str(e)))
+    #ld.write(_format_log("Out of send and receive threads"))
 
     is_running = True
-    ld.write(_format_log("Restarting service"))
+    #ld.write(_format_log("Restarting service"))
 
 
 if __name__=="__main__":
-    ld = setup_logs(LOGFILE)
-    ld.write(_format_log("Starting service"))
+    #ld = setup_logs(LOGFILE)
+    #ld.write(_format_log("Starting service"))
+    ld = None
 
     while True:
         socket = None
