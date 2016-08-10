@@ -90,12 +90,10 @@ def send_data(ld, sock):
                     sock.sendall(temp)
                     ld.write(_format_log("Sending " + f))
                     fd.close()
-                    #os.remove(PCAP_DIR + "/" + f)
-            while True:
-                time.sleep(1000)
+                    os.remove(PCAP_DIR + "/" + f)
         except Exception as e:
-            print str(e)
             is_running = False
+            ld.write(_format_log(str(e)))
     ld.write(_format_log("Send thread stopped"))
 
 
@@ -109,6 +107,7 @@ def receive_data(ld, sock):
                 fd.write(data + ";\n")
         except Exception as e:
             is_running = False
+            ld.write(_format_log(str(e)))
     ld.write(_format_log("Receive thread stopped"))
 
 
