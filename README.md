@@ -27,6 +27,8 @@ image to `/tmp/`, then I would run the command:
 $ sudo dd bs=4m if=/tmp/wardriver.iso of=/dev/disk7
 ```
 
+Remember to [change the default credentials](https://www.raspberrypi.org/documentation/linux/usage/users.md)!
+
 ### From Scratch
 Install Raspbian to your sdcard. The lite version works fine, and setup
 has been tested with jessie-lite. Set up wifi using
@@ -49,5 +51,3 @@ Additionally, it will add a service that starts on boot. After installation,
 the Raspberry Pi will run a Bluetooth daemon that tries to connect to an
 appropriate Android device. The Bluetooth daemon will talk to the Android
 application and the zbwardrive process, which is also started on boot.
-
-Remember to [change the default credentials](https://www.raspberrypi.org/documentation/linux/usage/users.md)!
